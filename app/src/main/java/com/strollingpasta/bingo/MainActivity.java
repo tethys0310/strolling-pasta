@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { // 액티비티로 넘기는 거
+            public void onClick(View view) {
                 passToActivity(new BingoActivity());
             }
         });
