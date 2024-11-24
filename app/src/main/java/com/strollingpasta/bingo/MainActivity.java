@@ -1,5 +1,6 @@
 package com.strollingpasta.bingo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -26,14 +28,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // 프래그먼트
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        
-        settingButtons(fragmentManager);
+        settingButtons();
     }
 
     // 초기 화면에서 메뉴버튼에 리스너 부여
-    protected void settingButtons(FragmentManager fragmentManager) {
+    protected void settingButtons() {
 
         // 메뉴 버튼 선언
         Button buttonBook = binding.mainBtnBook;
@@ -44,19 +43,15 @@ public class MainActivity extends AppCompatActivity {
         // 메뉴 버튼에 리스너 연결
         buttonBook.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { // 프래그먼트로 넘기는 거
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(binding.mainFrame.getId(), new BingoTestFragment());
-                fragmentTransaction.commit();
+            public void onClick(View view) {
+                passToFragment(new BingoTestFragment());
             }
         });
 
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { // 액티비티로 넘기는 거
-                Intent intent = new Intent(getApplicationContext(), BingoActivity.class);
-                startActivity(intent);
-                finish();
+                passToActivity(new BingoActivity());
             }
         });
 
@@ -76,23 +71,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // 프래그먼트 내부에서 카메라 프래그먼트 호출하는 용도
-    public void callCameraFragment(@NonNull FragmentManager fragmentManager) {
+
+    // 메인에서 프래그먼트 호출
+    public void passToFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(binding.mainFrame.getId(), new CameraTestFragment());
+        fragmentTransaction.replace(binding.mainFrame.getId(), fragment);
         fragmentTransaction.commit();
     }
 
-
-    // 나중에 수정
-    public void passToFragment(@NonNull FragmentManager fragmentManager) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(binding.mainFrame.getId(), new BingoTestFragment());
-        fragmentTransaction.commit();
-    }
-
-    public void passToActivity() {
-        Intent intent = new Intent(getApplicationContext(), BingoActivity.class);
+    // 메인에서 액티비티 호출
+    public void passToActivity(Activity activity) {
+        Intent intent = new Intent(getApplicationContext(), activity.getClass());
         startActivity(intent);
         finish();
     }

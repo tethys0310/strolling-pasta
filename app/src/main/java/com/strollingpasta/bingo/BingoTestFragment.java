@@ -106,8 +106,8 @@ public class BingoTestFragment extends Fragment {
         buttonCamera.setOnClickListener(new View.OnClickListener() { // 카메라 켜기
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "카메라 프래그먼트로 전환 후 거기서 카메라 띄우기", Toast.LENGTH_SHORT).show();
-                activity.callCameraFragment(getParentFragmentManager());
+                // 카메라 프래그먼트로 전환 후 거기서 카메라 띄우기
+                activity.passToFragment(new CameraTestFragment());
             }
         });
 
