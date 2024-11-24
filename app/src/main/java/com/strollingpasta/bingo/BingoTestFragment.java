@@ -1,15 +1,9 @@
 package com.strollingpasta.bingo;
 
-import static java.lang.Boolean.TRUE;
-
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,7 +107,7 @@ public class BingoTestFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "카메라 프래그먼트로 전환 후 거기서 카메라 띄우기", Toast.LENGTH_SHORT).show();
-                activity.callCamera(getParentFragmentManager());
+                activity.callCameraFragment(getParentFragmentManager());
             }
         });
 

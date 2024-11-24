@@ -18,6 +18,9 @@ import com.strollingpasta.bingo.databinding.FragmentCameraTestBinding;
  */
 public class CameraTestFragment extends Fragment {
 
+    // 여기에서 인공지능 모델 돌리기도 해야 할 듯?
+
+
     // 뷰 바인딩
     private FragmentCameraTestBinding binding;
 

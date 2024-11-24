@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -51,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void callCamera(FragmentManager fragmentManager) {
+    // 프래그먼트 내부에서 카메라 프래그먼트 호출하는 용도
+    public void callCameraFragment(@NonNull FragmentManager fragmentManager) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(binding.mainFrame.getId(), new CameraTestFragment());
         fragmentTransaction.commit();
