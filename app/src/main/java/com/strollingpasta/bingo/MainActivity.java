@@ -1,8 +1,10 @@
 package com.strollingpasta.bingo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,15 +36,41 @@ public class MainActivity extends AppCompatActivity {
     protected void settingButtons(FragmentManager fragmentManager) {
 
         // 메뉴 버튼 선언
-        Button buttonTest = binding.mainBtnTest;
+        Button buttonBook = binding.mainBtnBook;
+        Button buttonStart = binding.button;
+        Button buttonWeek = binding.mainBtnWeek;
+        Button buttonArchive = binding.mainBtnArchive;
 
         // 메뉴 버튼에 리스너 연결
-        buttonTest.setOnClickListener(new View.OnClickListener() {
+        buttonBook.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // 프래그먼트로 넘기는 거
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(binding.mainFrame.getId(), new BingoTestFragment());
                 fragmentTransaction.commit();
+            }
+        });
+
+        buttonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // 액티비티로 넘기는 거
+                Intent intent = new Intent(getApplicationContext(), BingoActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        buttonWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "미구현", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        buttonArchive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "미구현", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -54,5 +82,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(binding.mainFrame.getId(), new CameraTestFragment());
         fragmentTransaction.commit();
     }
+
+
+    // 나중에 수정
+    public void passToFragment(@NonNull FragmentManager fragmentManager) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(binding.mainFrame.getId(), new BingoTestFragment());
+        fragmentTransaction.commit();
+    }
+
+    public void passToActivity() {
+        Intent intent = new Intent(getApplicationContext(), BingoActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
 }
