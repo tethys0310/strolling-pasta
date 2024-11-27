@@ -2,6 +2,8 @@ package com.strollingpasta.bingo;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.credentials.GetCredentialRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.strollingpasta.bingo.databinding.ActivityMainBinding;
 import com.strollingpasta.bingo.databinding.ActivityTitleBinding;
 
@@ -30,19 +35,32 @@ public class TitleActivity extends AppCompatActivity {
 
     private PermissionChecker permissionChecker;
     private ActivityTitleBinding binding;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         permissionChecker = new PermissionChecker(this, this);
 
+        // 뷰 바인드
         binding = ActivityTitleBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
+        // 파이어베이스 초기화
+        firebaseAuth = FirebaseAuth.getInstance();
 
         settingButtons();
 
         if (!permissionChecker.checkPermission())
             permissionChecker.requestPermissions();
+
+        setContentView(binding.getRoot());
+    }
+
+    private void googleSignin() {
+        GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
+                .setFilterByAuthorizedAccounts(true)
+                .setAutoSelectEnabled(true)
+                .build();
 
     }
 
@@ -64,9 +82,18 @@ public class TitleActivity extends AppCompatActivity {
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                if (firebaseAuth.getCurrentUser() != null) { // 인증 되어 있을 때
+                    Log.d("Log", "파이어베이스 인증 완료");
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Log.d("Log", "파이어베이스 미인증");
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 

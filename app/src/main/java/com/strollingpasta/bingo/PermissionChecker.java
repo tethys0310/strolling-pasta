@@ -26,7 +26,6 @@ public class PermissionChecker {
 
     private final String[] permissionsAfter13 = { // 티라미수(안드 13) 이상에서 필요한 권한
             Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
 
