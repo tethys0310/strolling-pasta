@@ -118,7 +118,7 @@ public class CameraTestFragment extends Fragment {
         binding = null;
     }
 
-    protected void settingButtons() {
+    private void settingButtons() {
         Button buttonCapture = binding.cameraTestBtnCapture;
 
         // 메뉴 버튼에 리스너 연결
