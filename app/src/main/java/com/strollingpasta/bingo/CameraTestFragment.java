@@ -190,7 +190,6 @@ public class CameraTestFragment extends Fragment {
                 new ImageCapture.OnImageSavedCallback() {
                     @Override
                     public void onImageSaved(ImageCapture.OutputFileResults outputFileResults) {
-                        // insert your code here.
                         String msg = "Photo capture succeeded: " + outputFileResults.getSavedUri();
                         getActivity().runOnUiThread((Runnable) () -> {
                             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();

@@ -56,4 +56,6 @@ dependencies {
     implementation ("androidx.camera:camera-video:${camerax_version}")
     implementation ("androidx.camera:camera-view:${camerax_version}")
     implementation ("androidx.camera:camera-extensions:${camerax_version}")
+    //Google play games
+    implementation ("com.google.android.gms:play-services-games-v2:+")
 }

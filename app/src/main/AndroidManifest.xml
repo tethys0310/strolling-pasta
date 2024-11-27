@@ -41,6 +41,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"></activity>
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/game_services_project_id"/>
     </application>
 
 </manifest>
