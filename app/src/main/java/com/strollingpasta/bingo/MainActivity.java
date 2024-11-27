@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +16,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.strollingpasta.bingo.databinding.ActivityMainBinding;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
     // 뷰 바인딩
     private ActivityMainBinding binding;
+
+    // 텍스트 뷰 (날짜)
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         settingButtons();
+
+        textView = findViewById(R.id.textView);
+
+        getDT();
     }
 
     // 초기 화면에서 메뉴버튼에 리스너 부여
@@ -87,6 +97,17 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    public void getDT() {
+        Calendar cal = Calendar.getInstance();
+        int y, m, d, h, mi, s;
 
+        y = cal.get(Calendar.YEAR);
+        m = cal.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 +1
+        d = cal.get(Calendar.DAY_OF_MONTH);
+        h = cal.get(Calendar.HOUR_OF_DAY); // 24시간제
+        mi = cal.get(Calendar.MINUTE);
+        s = cal.get(Calendar.SECOND);
 
+        textView.setText(y + "년" + m + "월" + d + "일" );
+    }
 }
