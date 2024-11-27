@@ -2,93 +2,89 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <Button
         android:id="@+id/cat"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="고양이"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        tools:layout_editor_absoluteX="155dp" />
+        tools:layout_editor_absoluteX="27dp"
+        tools:layout_editor_absoluteY="371dp" />
 
     <Button
         android:id="@+id/dog"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="271dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="개"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        tools:layout_editor_absoluteX="108dp"
+        tools:layout_editor_absoluteY="371dp" />
 
     <Button
         android:id="@+id/tree"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="124dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="나무"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="261dp" />
 
     <Button
         android:id="@+id/bird"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginBottom="271dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="새"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="111dp" />
 
     <Button
         android:id="@+id/bluesign"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="파란색 표지판"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="246dp" />
+        tools:layout_editor_absoluteX="196dp"
+        tools:layout_editor_absoluteY="371dp" />
 
     <Button
         android:id="@+id/person_black"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="검은옷 사람"
-        app:layout_constraintBottom_toTopOf="@+id/cat"
-        app:layout_constraintEnd_toStartOf="@+id/bluesign"
-        app:layout_constraintStart_toEndOf="@+id/bus_blue"
-        app:layout_constraintTop_toBottomOf="@+id/bus_green" />
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="111dp" />
 
     <Button
         android:id="@+id/bus_blue"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="파란색 버스"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="246dp" />
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="261dp" />
 
     <Button
         android:id="@+id/bus_green"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="초록색 버스"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="124dp" />
+        tools:layout_editor_absoluteX="212dp"
+        tools:layout_editor_absoluteY="111dp" />
 
     <Button
         android:id="@+id/church"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="교회"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="212dp"
+        tools:layout_editor_absoluteY="261dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -98,5 +94,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="484dp" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="뒤로가기"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="29dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
