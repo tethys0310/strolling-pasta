@@ -49,7 +49,7 @@ dependencies {
     // Optional: include LiteRT Support Library
     implementation("com.google.android.gms:play-services-tflite-support:16.1.0")
     // CameraX
-    val camerax_version = "1.1.0-beta01"
+    val camerax_version = "1.4.0"
     implementation ("androidx.camera:camera-core:${camerax_version}")
     implementation ("androidx.camera:camera-camera2:${camerax_version}")
     implementation ("androidx.camera:camera-lifecycle:${camerax_version}")
