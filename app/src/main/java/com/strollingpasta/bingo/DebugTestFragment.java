@@ -95,7 +95,6 @@ public class DebugTestFragment extends Fragment {
         Button buttonCamera = binding.aiButtonCamera;
 
         // 메뉴 버튼에 리스너 연결
-
         buttonHello.setOnClickListener(new View.OnClickListener() { // 안녕~
             @Override
             public void onClick(View view) {

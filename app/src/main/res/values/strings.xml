@@ -2,6 +2,4 @@
     <string name="app_name">StrollingPasta</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- Replace 0000000000 with your game’s project id. Example value shown above.  -->
-    <string name="game_services_project_id" translatable="false"> 20241127 </string>
 </resources>
