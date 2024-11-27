@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.core.CameraExecutor;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
@@ -15,9 +14,7 @@ import androidx.camera.core.Preview;
 import androidx.camera.core.resolutionselector.ResolutionSelector;
 import androidx.camera.core.resolutionselector.ResolutionStrategy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.video.OutputOptions;
 import androidx.camera.view.PreviewView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -28,10 +25,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.strollingpasta.bingo.databinding.FragmentBingoTestBinding;
 import com.strollingpasta.bingo.databinding.FragmentCameraTestBinding;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
@@ -50,6 +45,8 @@ public class CameraTestFragment extends Fragment {
 
     // 뷰 바인딩
     private FragmentCameraTestBinding binding;
+    
+    //카메라X 관련
     private ProcessCameraProvider processCameraProvider;
     private ImageCapture imageCapture;
     private ImageCapture.OutputFileOptions outputFileOptions;
@@ -163,23 +160,10 @@ public class CameraTestFragment extends Fragment {
                 .build();
         preview.setSurfaceProvider(viewFinder.getSurfaceProvider());
 
+        // 이미지 캡처 설정
         imageCapture = new ImageCapture.Builder()
                 .setTargetRotation(getView().getDisplay().getRotation())
                 .setResolutionSelector(resolutionSelector)
-                .build();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.KOREA).format(System.currentTimeMillis()));
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-            String appName = requireContext().getString(R.string.app_name);
-            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/${appName}");
-        }
-
-
-        outputFileOptions = new ImageCapture.OutputFileOptions.Builder(requireContext().getContentResolver(),
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new ContentValues())
                 .build();
 
         
@@ -190,7 +174,18 @@ public class CameraTestFragment extends Fragment {
 
     }
 
-    private void takePhoto() {
+    private void takePhoto() { // 찰칵
+
+        // 컨텐츠 벨류 설정
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.KOREA).format(System.currentTimeMillis()));
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+        contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/StrollingPasta");
+
+        // 아웃풋 파일 옵션 설정
+        outputFileOptions = new ImageCapture.OutputFileOptions.Builder(requireContext().getContentResolver(),
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                .build();
 
         imageCapture.takePicture(outputFileOptions, cameraExecutor,
                 new ImageCapture.OnImageSavedCallback() {
@@ -210,7 +205,6 @@ public class CameraTestFragment extends Fragment {
                     }
                 }
         );
-
     }
 
 }
