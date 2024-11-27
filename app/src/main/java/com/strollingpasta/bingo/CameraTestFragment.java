@@ -122,7 +122,6 @@ public class CameraTestFragment extends Fragment {
         Button buttonCapture = binding.cameraTestBtnCapture;
 
         // 메뉴 버튼에 리스너 연결
-
         buttonCapture.setOnClickListener(new View.OnClickListener() { // 찰칵
             @Override
             public void onClick(View view) {
