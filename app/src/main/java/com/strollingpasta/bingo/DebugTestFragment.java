@@ -11,18 +11,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.strollingpasta.bingo.databinding.FragmentBingoTestBinding;
+import com.strollingpasta.bingo.databinding.FragmentDebugTestBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BingoTestFragment#newInstance} factory method to
+ * Use the {@link DebugTestFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BingoTestFragment extends Fragment {
+public class DebugTestFragment extends Fragment {
 
 
     // 뷰 바인딩
-    private FragmentBingoTestBinding binding;
+    private FragmentDebugTestBinding binding;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -34,7 +34,7 @@ public class BingoTestFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public BingoTestFragment() {
+    public DebugTestFragment() {
         // Required empty public constructor
     }
 
@@ -47,8 +47,8 @@ public class BingoTestFragment extends Fragment {
      * @return A new instance of fragment BingoTestFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BingoTestFragment newInstance(String param1, String param2) {
-        BingoTestFragment fragment = new BingoTestFragment();
+    public static DebugTestFragment newInstance(String param1, String param2) {
+        DebugTestFragment fragment = new DebugTestFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,7 +69,7 @@ public class BingoTestFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentBingoTestBinding.inflate(inflater, container, false);
+        binding = FragmentDebugTestBinding.inflate(inflater, container, false);
 
         // 상위 액티비티 불러오기
         MainActivity activity = (MainActivity) getActivity();

@@ -43,7 +43,15 @@ public class MainActivity extends AppCompatActivity {
         buttonBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                passToFragment(new BingoTestFragment());
+                Toast.makeText(getApplicationContext(), "미구현", Toast.LENGTH_SHORT).show();
+            }
+        });
+        buttonBook.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(getApplicationContext(), "디버그 모드", Toast.LENGTH_SHORT).show();
+                passToFragment(new DebugTestFragment());
+                return false;
             }
         });
 

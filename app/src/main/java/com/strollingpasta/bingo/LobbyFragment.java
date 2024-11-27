@@ -1,5 +1,6 @@
 package com.strollingpasta.bingo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +25,6 @@ public class LobbyFragment extends Fragment {
 
     // 뷰 바인딩
     FragmentLobbyBinding binding;
-    MainActivity activity = (MainActivity) getActivity();
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -71,12 +71,16 @@ public class LobbyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentLobbyBinding.inflate(inflater, container, false);
-        settingButtons();
+
+        // 상위 액티비티 불러오기
+        MainActivity activity = (MainActivity) getActivity();
+
+        settingButtons(activity);
         getDT();
         return binding.getRoot();
     }
 
-    private void settingButtons() {
+    private void settingButtons(MainActivity activity) {
 
         Button buttonStart = binding.lobbyBtnStart;
 
