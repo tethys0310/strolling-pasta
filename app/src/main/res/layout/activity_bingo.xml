@@ -5,105 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/bingo_btn_5"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="검은옷 사람"
-        app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_6"
-        app:layout_constraintEnd_toEndOf="@+id/bingo_btn_2"
-        app:layout_constraintStart_toStartOf="@+id/bingo_btn_2"
-        app:layout_constraintTop_toTopOf="@+id/bingo_btn_6" />
-
-    <Button
-        android:id="@+id/bingo_btn_2"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="개"
-        app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_1"
+    <FrameLayout
+        android:id="@+id/bingoFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bingo_btn_1" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2">
 
-    <Button
-        android:id="@+id/bingo_btn_3"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="나무"
-        app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_2"
-        app:layout_constraintStart_toEndOf="@+id/bingo_btn_2"
-        app:layout_constraintTop_toTopOf="@+id/bingo_btn_2" />
-
-    <Button
-        android:id="@+id/bingo_btn_1"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="고양이"
-        app:layout_constraintEnd_toStartOf="@+id/bingo_btn_2"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
-
-    <Button
-        android:id="@+id/bingo_btn_4"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="새"
-        app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_5"
-        app:layout_constraintEnd_toStartOf="@+id/bingo_btn_5"
-        app:layout_constraintTop_toTopOf="@+id/bingo_btn_5" />
-
-    <Button
-        android:id="@+id/bingo_btn_6"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="파란색 표지판"
-        app:layout_constraintStart_toEndOf="@+id/bingo_btn_5"
-        app:layout_constraintTop_toBottomOf="@+id/bingo_btn_3" />
-
-    <Button
-        android:id="@+id/bingo_btn_7"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="파란색 버스"
-        app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_8"
-        app:layout_constraintEnd_toStartOf="@+id/bingo_btn_8"
-        app:layout_constraintTop_toTopOf="@+id/bingo_btn_8" />
-
-    <Button
-        android:id="@+id/bingo_btn_9"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="교회"
-        app:layout_constraintStart_toEndOf="@+id/bingo_btn_8"
-        app:layout_constraintTop_toBottomOf="@+id/bingo_btn_6" />
-
-    <Button
-        android:id="@+id/bingo_btn_8"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_weight="1"
-        android:text="초록색 버스"
-        app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_9"
-        app:layout_constraintEnd_toEndOf="@+id/bingo_btn_5"
-        app:layout_constraintStart_toStartOf="@+id/bingo_btn_5"
-        app:layout_constraintTop_toTopOf="@+id/bingo_btn_9" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:text="남은 빙고 개수 : "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bingo_btn_8" />
+    </FrameLayout>
 
     <Button
         android:id="@+id/bingo_btn_back"
@@ -120,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

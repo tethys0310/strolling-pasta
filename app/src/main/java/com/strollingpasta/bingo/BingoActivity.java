@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.strollingpasta.bingo.databinding.ActivityBingoBinding;
 import com.strollingpasta.bingo.databinding.ActivityMainBinding;
@@ -29,7 +32,7 @@ public class BingoActivity extends AppCompatActivity {
         // 뷰 바인딩
         binding = ActivityBingoBinding.inflate(getLayoutInflater());
         settingButtons();
-
+        passToFragment(new BingoBoardFragment());
         setContentView(binding.getRoot());
 
     }
@@ -48,6 +51,13 @@ public class BingoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void passToFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(binding.bingoFrame.getId(), fragment);
+        fragmentTransaction.commit();
     }
 
     public void passToActivity(Activity activity) {
