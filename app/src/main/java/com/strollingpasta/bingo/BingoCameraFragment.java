@@ -1,8 +1,6 @@
 package com.strollingpasta.bingo;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,7 +23,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.strollingpasta.bingo.databinding.FragmentCameraTestBinding;
+import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
+import com.strollingpasta.bingo.databinding.FragmentBingoCameraBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -35,34 +34,31 @@ import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CameraTestFragment#newInstance} factory method to
+ * Use the {@link BingoCameraFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CameraTestFragment extends Fragment {
+public class BingoCameraFragment extends Fragment {
 
-    // 여기에서 인공지능 모델 돌리기도 해야 할 듯?
-
-
-    // 뷰 바인딩
-    private FragmentCameraTestBinding binding;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String OBJECT_DETECT = "";
     
+    // 뷰 바인딩
+    private FragmentBingoCameraBinding binding;
+
     //카메라X 관련
     private ProcessCameraProvider processCameraProvider;
     private ImageCapture imageCapture;
     private ImageCapture.OutputFileOptions outputFileOptions;
     private ExecutorService cameraExecutor;
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // 액티비티 전환용 상위 액티비티
+    BingoActivity activity;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String objectDetect;
 
-    public CameraTestFragment() {
+    public BingoCameraFragment() {
         // Required empty public constructor
     }
 
@@ -70,17 +66,13 @@ public class CameraTestFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CameraTestFragment.
+     * @return A new instance of fragment BingoCameraFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CameraTestFragment newInstance(String param1, String param2) {
-        CameraTestFragment fragment = new CameraTestFragment();
-
+    public static BingoCameraFragment newInstance(String objectDetect) {
+        BingoCameraFragment fragment = new BingoCameraFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(OBJECT_DETECT, objectDetect);
         fragment.setArguments(args);
         return fragment;
     }
@@ -89,8 +81,7 @@ public class CameraTestFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            objectDetect = getArguments().getString(OBJECT_DETECT);
         }
     }
 
@@ -98,7 +89,8 @@ public class CameraTestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentCameraTestBinding.inflate(inflater, container, false);
+        binding = FragmentBingoCameraBinding.inflate(inflater, container, false);
+        activity = (BingoActivity) getActivity();
         settingButtons();
         return binding.getRoot();
     }
@@ -109,23 +101,20 @@ public class CameraTestFragment extends Fragment {
         startCamera();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        cameraExecutor.shutdown();
-        binding = null;
-    }
-
     private void settingButtons() {
-        Button buttonCapture = binding.cameraTestBtnCapture;
 
-        // 메뉴 버튼에 리스너 연결
-        buttonCapture.setOnClickListener(new View.OnClickListener() { // 찰칵
+        Button buttonCapture = binding.cameraBtnCapture;
+
+        buttonCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 takePhoto();
+                // 인공지능 모델로 체크
+                // 성공 실패 여부 판정
+                // DB에 성공 실패 여부 저장
             }
         });
+
     }
 
     private void startCamera() { // 카메라X 실행
@@ -141,7 +130,7 @@ public class CameraTestFragment extends Fragment {
         }
 
         // 뷰파인더 바인딩
-        PreviewView viewFinder = binding.cameraTestViewFinder;
+        PreviewView viewFinder = binding.cameraViewFinder;
         android.util.Size screenSize = new android.util.Size(720, 720); // 사진 비율
         ResolutionSelector resolutionSelector = new ResolutionSelector.Builder()
                 .setResolutionStrategy(new ResolutionStrategy(screenSize, ResolutionStrategy.FALLBACK_RULE_NONE))
@@ -163,7 +152,7 @@ public class CameraTestFragment extends Fragment {
                 .setResolutionSelector(resolutionSelector)
                 .build();
 
-        
+
         // 라이프사이클에 바인딩
         processCameraProvider.unbindAll(); // 이전 시행내역 언바인딩
         processCameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture);
@@ -188,10 +177,11 @@ public class CameraTestFragment extends Fragment {
                 new ImageCapture.OnImageSavedCallback() {
                     @Override
                     public void onImageSaved(ImageCapture.OutputFileResults outputFileResults) {
-                        String msg = "Photo capture succeeded: " + outputFileResults.getSavedUri();
+                        String msg = "Photo capture succeeded: " + objectDetect;
                         getActivity().runOnUiThread((Runnable) () -> {
                             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                         });
+                        activity.passToFragment(new BingoBoardFragment());
                     }
 
                     @Override
@@ -202,5 +192,4 @@ public class CameraTestFragment extends Fragment {
                 }
         );
     }
-
 }

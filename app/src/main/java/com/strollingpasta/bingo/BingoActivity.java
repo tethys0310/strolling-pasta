@@ -47,7 +47,12 @@ public class BingoActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                passToActivity(new MainActivity());
+                if (getSupportFragmentManager().getFragments().get(0) instanceof BingoBoardFragment) {
+                    passToActivity(new MainActivity());
+                }
+                else {
+                    passToFragment(new BingoBoardFragment());
+                }
             }
         });
 
