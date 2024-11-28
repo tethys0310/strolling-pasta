@@ -1,7 +1,5 @@
 package com.strollingpasta.bingo;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -15,7 +13,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
-import com.strollingpasta.bingo.databinding.FragmentCameraTestBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +33,8 @@ public class BingoBoardFragment extends Fragment {
     // 빙고 객체와 확인 여부
     ArrayList<String> dailyBingoList = new ArrayList<>();
     ArrayList<Boolean> dailyBingoListDone = new ArrayList<>();
+    // 액티비티
+    BingoActivity activity;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,6 +69,7 @@ public class BingoBoardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        activity = (BingoActivity) getActivity();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class BingoBoardFragment extends Fragment {
     }
 
 
-    private void bingoCheck(int index) {
+    private void bingoColoring(int index) {
 
         if (dailyBingoListDone.get(index)) {
             getActivity().runOnUiThread((Runnable) () -> {
@@ -118,35 +118,52 @@ public class BingoBoardFragment extends Fragment {
         dailyBingoListDone.set(index, true);
         switch (index) {
             case 0 :
-                binding.bingoBtn1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 1 :
-                binding.bingoBtn2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 2 :
-                binding.bingoBtn3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 3 :
-                binding.bingoBtn4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 4 :
-                binding.bingoBtn5.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn5.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 5 :
-                binding.bingoBtn6.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn6.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 6 :
-                binding.bingoBtn7.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn7.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 7 :
-                binding.bingoBtn8.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn8.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 8 :
-                binding.bingoBtn9.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                if (bingoCheck(dailyBingoList.get(index)))
+                    binding.bingoBtn9.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             default:
                 break;
         }
+    }
+    
+    private boolean bingoCheck(String object) {
+        // 프래그먼트 넘기고,
+        // 거기서 pass fail 정보 받아서 다시 리턴
+        // 일단은...
+        activity.passToFragment(BingoCameraFragment.newInstance(object));
+        return true;
     }
 
 
@@ -164,63 +181,63 @@ public class BingoBoardFragment extends Fragment {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(0);
+                bingoColoring(0);
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(1);
+                bingoColoring(1);
             }
         });
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(2);
+                bingoColoring(2);
             }
         });
 
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(3);
+                bingoColoring(3);
             }
         });
 
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(4);
+                bingoColoring(4);
             }
         });
 
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(5);
+                bingoColoring(5);
             }
         });
 
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(6);
+                bingoColoring(6);
             }
         });
 
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(7);
+                bingoColoring(7);
             }
         });
 
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoCheck(8);
+                bingoColoring(8);
             }
         });
     }
