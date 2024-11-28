@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#fcf7b6</color>
+    <color name="bingo_done">#00BCD4</color>
 </resources>
