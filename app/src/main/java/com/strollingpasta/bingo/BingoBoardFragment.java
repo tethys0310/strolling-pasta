@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
 import com.strollingpasta.bingo.databinding.FragmentCameraTestBinding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BingoBoardFragment#newInstance} factory method to
@@ -23,6 +26,7 @@ public class BingoBoardFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private FragmentBingoBoardBinding binding;
+    private int bingoLeft = 9;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -64,11 +68,18 @@ public class BingoBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentBingoBoardBinding.inflate(inflater, container, false);
+        // 나중에 DB 연동 할 때는 클래스 따로 뽑아서 구현
+        bingoLoader();
         settingButtons();
         return binding.getRoot();
     }
 
     private void settingButtons() {
 
+    }
+
+    private void bingoLoader() {
+        ArrayList<String> dailyBingoList = new ArrayList<>();
+        dailyBingoList.addAll(Arrays.asList("고양이", "개", "나무", "새", "검은 옷 사람", "파란색 표지판", "파란색 버스", "초록색 버스", "교회"));
     }
 }
