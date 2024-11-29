@@ -105,65 +105,63 @@ public class BingoBoardFragment extends Fragment {
         Log.d("Log", dailyBingoListDone.toString());
     }
 
-
+    // 갈아엎어야할듯
     private void bingoColoring(int index) {
 
-        if (dailyBingoListDone.get(index)) {
-            getActivity().runOnUiThread((Runnable) () -> {
-                Toast.makeText(getContext(), "이미 체크한 빙고입니다.", Toast.LENGTH_SHORT).show();
-            });
-            return;
-        }
-
-        dailyBingoListDone.set(index, true);
         switch (index) {
             case 0 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 1 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 2 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 3 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 4 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn5.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 5 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn6.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 6 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn7.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 7 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn8.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 8 :
-                if (bingoCheck(dailyBingoList.get(index)))
+                if (dailyBingoListDone.get(index))
                     binding.bingoBtn9.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             default:
                 break;
         }
     }
-    
-    private boolean bingoCheck(String object) {
-        // 프래그먼트 넘기고,
-        // 거기서 pass fail 정보 받아서 다시 리턴
-        // 일단은...
+
+    private void bingoCheck(int index) {
+
+        String object = dailyBingoList.get(index);
+
+        // 프래그먼트 넘기기...?
+        if (dailyBingoListDone.get(index)) {
+            getActivity().runOnUiThread((Runnable) () -> {
+                Toast.makeText(getContext(), "이미 체크한 빙고입니다.", Toast.LENGTH_SHORT).show();
+            });
+            return;
+        }
         activity.passToFragment(BingoCameraFragment.newInstance(object));
-        return true;
     }
 
 
@@ -181,64 +179,67 @@ public class BingoBoardFragment extends Fragment {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(0);
+                bingoCheck(0);
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(1);
+                bingoCheck(1);
             }
         });
 
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(2);
+                bingoCheck(2);
             }
         });
 
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(3);
+                bingoCheck(3);
             }
         });
 
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(4);
+                bingoCheck(4);
             }
         });
 
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(5);
+                bingoCheck(5);
             }
         });
 
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(6);
+                bingoCheck(6);
             }
         });
 
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bingoColoring(7);
+                bingoCheck(7);
             }
         });
 
-        button9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bingoColoring(8);
-            }
-        });
+        button9.setOnClickListener(view -> bingoCheck(8));
     }
+
+    private Bingo BingoSetupTest() {
+        Bingo bingo = new Bingo();
+        bingo.setId("nr6eHvz5KDa2sDroaPVY");
+
+        return bingo;
+    }
+
 }

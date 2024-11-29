@@ -22,5 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="카메라 켜기" />
+
+        <Button
+            android:id="@+id/ai_button_dbconnect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="예시 빙고 문서와 연결 후 출력" />
     </LinearLayout>
 </FrameLayout>

@@ -93,6 +93,7 @@ public class DebugTestFragment extends Fragment {
         // 메뉴 버튼 선언
         Button buttonHello = binding.aiBtnHello;
         Button buttonCamera = binding.aiButtonCamera;
+        Button buttonDB = binding.aiButtonDbconnect;
 
         // 메뉴 버튼에 리스너 연결
         buttonHello.setOnClickListener(new View.OnClickListener() { // 안녕~
@@ -107,6 +108,14 @@ public class DebugTestFragment extends Fragment {
             public void onClick(View view) {
                 // 카메라 프래그먼트로 전환 후 거기서 카메라 띄우기
                 activity.passToFragment(new CameraTestFragment());
+            }
+        });
+
+        buttonDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseConnector firebaseConnector = new FirebaseConnector();
+                firebaseConnector.fillBingoData(new Bingo(), "nr6eHvz5KDa2sDroaPVY");
             }
         });
 
