@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +36,7 @@ public class TitleActivity extends AppCompatActivity {
 
     private PermissionChecker permissionChecker;
     private ActivityTitleBinding binding;
+    private FirebaseConnector firebaseConnector;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -61,7 +63,6 @@ public class TitleActivity extends AppCompatActivity {
                 .setFilterByAuthorizedAccounts(true)
                 .setAutoSelectEnabled(true)
                 .build();
-
     }
 
     protected void settingButtons() {
@@ -82,18 +83,11 @@ public class TitleActivity extends AppCompatActivity {
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (firebaseAuth.getCurrentUser() != null) { // 인증 되어 있을 때
-                    Log.d("Log", "파이어베이스 인증 완료");
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Log.d("Log", "파이어베이스 미인증");
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                firebaseConnector = new FirebaseConnector();
+                firebaseConnector.ConnectingTest();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
