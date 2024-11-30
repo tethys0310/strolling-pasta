@@ -115,7 +115,7 @@ public class DebugTestFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseConnector firebaseConnector = new FirebaseConnector();
-                firebaseConnector.fillBingoData(new Bingo(), "nr6eHvz5KDa2sDroaPVY");
+                firebaseConnector.ConnectingTest();
                 Toast.makeText(activity, "로그캣 확인하세요", Toast.LENGTH_SHORT).show();
             }
         });

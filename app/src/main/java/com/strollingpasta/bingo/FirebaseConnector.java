@@ -14,12 +14,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class FirebaseConnector {
 
     FirebaseFirestore db;
-    DocumentReference documentReference;
+    public DocumentReference documentReference;
 
     FirebaseConnector() {
 
@@ -27,10 +26,14 @@ public class FirebaseConnector {
 
     }
     
-    // id 입력하면 id에 맞는 빙고 정보 가지고 옴
-    public void fillBingoData(Bingo bingo, String id) {
+    // id 입력하면 id에 맞는 빙고 정보 가지고 올 수 있게...
+    public DocumentReference fillBingoData(String id) {
         documentReference = db.collection("bingo").document(id);
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        return documentReference;
+    }
+
+    /*
+    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -52,7 +55,7 @@ public class FirebaseConnector {
                 }
             }
         });
-    }
+     */
 
 
     // bingoObject 정보 출력하는 테스트성 코드

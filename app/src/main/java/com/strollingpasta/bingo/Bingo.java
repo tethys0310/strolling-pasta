@@ -36,6 +36,14 @@ public class Bingo {
         this.bingoListDone = bingoListDone;
     }
 
+    public ArrayList<String> getBingoList() {
+        return bingoList;
+    }
+
+    public ArrayList<Boolean> getBingoListDone() {
+        return bingoListDone;
+    }
+
     @NonNull
     @Override
     public String toString() {
