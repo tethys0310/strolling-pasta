@@ -5,98 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/cat"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="24dp"
-        android:text="고양이"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        tools:layout_editor_absoluteX="155dp" />
-
-    <Button
-        android:id="@+id/dog"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="271dp"
-        android:text="개"
+    <FrameLayout
+        android:id="@+id/bingoFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/tree"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="124dp"
-        android:text="나무"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/bird"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginBottom="271dp"
-        android:text="새"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/bluesign"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="36dp"
-        android:text="파란색 표지판"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="246dp" />
-
-    <Button
-        android:id="@+id/person_black"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="검은옷 사람"
-        app:layout_constraintBottom_toTopOf="@+id/cat"
-        app:layout_constraintEnd_toStartOf="@+id/bluesign"
-        app:layout_constraintStart_toEndOf="@+id/bus_blue"
-        app:layout_constraintTop_toBottomOf="@+id/bus_green" />
-
-    <Button
-        android:id="@+id/bus_blue"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="36dp"
-        android:text="파란색 버스"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="246dp" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2">
+
+    </FrameLayout>
 
     <Button
-        android:id="@+id/bus_green"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="초록색 버스"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="124dp" />
-
-    <Button
-        android:id="@+id/church"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="36dp"
-        android:text="교회"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
+        android:id="@+id/bingo_btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="남은 빙고 개수 : "
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="뒤로가기"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="484dp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="117dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
