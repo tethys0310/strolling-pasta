@@ -1,5 +1,7 @@
 package com.strollingpasta.bingo;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.ContentValues;
 import android.os.Bundle;
 
@@ -25,10 +27,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
 import com.strollingpasta.bingo.databinding.FragmentBingoCameraBinding;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -43,7 +53,8 @@ public class BingoCameraFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String OBJECT_DETECT = "";
+    private static final String INDEX = "0";
+    private static final String BINGO = "1";
     
     // 뷰 바인딩
     private FragmentBingoCameraBinding binding;
@@ -56,9 +67,11 @@ public class BingoCameraFragment extends Fragment {
 
     // 액티비티 전환용 상위 액티비티
     BingoActivity activity;
+    FirebaseConnector firebaseConnector;
 
     // TODO: Rename and change types of parameters
-    private String objectDetect;
+    private int index;
+    private boolean[] bingo;
 
     public BingoCameraFragment() {
         // Required empty public constructor
@@ -71,10 +84,12 @@ public class BingoCameraFragment extends Fragment {
      * @return A new instance of fragment BingoCameraFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BingoCameraFragment newInstance(String objectDetect) {
+    public static BingoCameraFragment newInstance(int index, boolean[] bingo) {
         BingoCameraFragment fragment = new BingoCameraFragment();
         Bundle args = new Bundle();
-        args.putString(OBJECT_DETECT, objectDetect);
+        args.putInt(INDEX, index);
+        args.putBooleanArray(BINGO, bingo);
+        Log.d(TAG, "데이터 잘 넣었는지 확인" + index + bingo[index]);
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,7 +98,8 @@ public class BingoCameraFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            objectDetect = getArguments().getString(OBJECT_DETECT);
+            index = getArguments().getInt(INDEX);
+            bingo = getArguments().getBooleanArray(BINGO);
         }
     }
 
@@ -93,6 +109,7 @@ public class BingoCameraFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentBingoCameraBinding.inflate(inflater, container, false);
         activity = (BingoActivity) getActivity();
+        firebaseConnector = activity.getFirebaseConnector();
         settingButtons();
         return binding.getRoot();
     }
@@ -110,10 +127,39 @@ public class BingoCameraFragment extends Fragment {
         buttonCapture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                index = getArguments().getInt(INDEX);
+                bingo = getArguments().getBooleanArray(BINGO);
+                Log.d(TAG, "데이터 전달 확인" + index + bingo[index]);
+
                 takePhoto();
+
                 // 인공지능 모델로 체크
+
                 // 성공 실패 여부 판정
+                // 일단은 성공 고정
+                bingo[index] = true;
+
+                List<Boolean> list = new ArrayList<>(); // 리스트로 변환
+                for (boolean b : bingo) {
+                    list.add(b);
+                }
+
                 // DB에 성공 실패 여부 저장
+                DocumentReference documentReference = firebaseConnector.fillBingoData("nr6eHvz5KDa2sDroaPVY");
+                documentReference.update("bingoCheck", list)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!" + index + bingo[index]);
+                                activity.passToFragment(new BingoBoardFragment());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
             }
         });
 
@@ -135,7 +181,7 @@ public class BingoCameraFragment extends Fragment {
         PreviewView viewFinder = binding.cameraViewFinder;
         android.util.Size screenSize = new android.util.Size(720, 720); // 사진 비율
         ResolutionSelector resolutionSelector = new ResolutionSelector.Builder()
-                .setResolutionStrategy(new ResolutionStrategy(screenSize, ResolutionStrategy.FALLBACK_RULE_NONE))
+                .setResolutionStrategy(new ResolutionStrategy(screenSize, ResolutionStrategy.FALLBACK_RULE_CLOSEST_LOWER))
                 .build();
 
         // 뷰파인더 설정
@@ -179,11 +225,10 @@ public class BingoCameraFragment extends Fragment {
                 new ImageCapture.OnImageSavedCallback() {
                     @Override
                     public void onImageSaved(ImageCapture.OutputFileResults outputFileResults) {
-                        String msg = "Photo capture succeeded: " + objectDetect;
+                        String msg = "Photo capture succeeded: " + index;
                         getActivity().runOnUiThread((Runnable) () -> {
                             Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                         });
-                        activity.passToFragment(new BingoBoardFragment());
                     }
 
                     @Override

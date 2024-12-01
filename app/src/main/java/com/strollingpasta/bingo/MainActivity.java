@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     protected void settingButtons() {
 
         // 메뉴 버튼 선언
-        Button buttonBook = binding.mainBtnBook;
-        Button buttonWeek = binding.mainBtnWeek;
-        Button buttonArchive = binding.mainBtnArchive;
+        ImageButton buttonBook = binding.mainBtnBook;
+        ImageButton buttonWeek = binding.mainBtnWeek;
+        ImageButton buttonArchive = binding.mainBtnArchive;
 
         // 메뉴 버튼에 리스너 연결
         buttonBook.setOnClickListener(new View.OnClickListener() {

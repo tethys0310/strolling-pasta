@@ -1,7 +1,12 @@
 package com.strollingpasta.bingo;
 
+import static android.content.ContentValues.TAG;
+
+import static java.lang.Thread.sleep;
+
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +17,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
 
 import java.util.ArrayList;
@@ -31,8 +41,11 @@ public class BingoBoardFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private FragmentBingoBoardBinding binding;
     // 빙고 객체와 확인 여부
+    final Bingo bingo = new Bingo();
+    FirebaseConnector firebaseConnector;
     ArrayList<String> dailyBingoList = new ArrayList<>();
     ArrayList<Boolean> dailyBingoListDone = new ArrayList<>();
+    int dailyBingoListDoneCounter = 9;
     // 액티비티
     BingoActivity activity;
 
@@ -70,6 +83,7 @@ public class BingoBoardFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         activity = (BingoActivity) getActivity();
+        firebaseConnector = activity.getFirebaseConnector();
     }
 
     @Override
@@ -77,73 +91,91 @@ public class BingoBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentBingoBoardBinding.inflate(inflater, container, false);
-        // 나중에 DB 연동 할 때는 클래스 따로 뽑아서 구현
-        // 날짜 체크하고 이니탈
-        bingoInitialize();
+
         settingButtons();
+
+        // 원래는 날짜 체크 후 진행
+        // 비동기식 구성이라 일단 꺼내놨는데 나중에 조금 손 볼 듯...
+        DocumentReference documentReference = firebaseConnector.fillBingoData("nr6eHvz5KDa2sDroaPVY");
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        bingo.setId("nr6eHvz5KDa2sDroaPVY");
+                        // 타임스탬프 date로 변환
+                        Timestamp tmp = (Timestamp)document.getData().get("date");
+                        bingo.setDate(tmp.toDate());
+                        // 빙고 관련 정보들
+                        bingo.setBingoList((ArrayList<String>) document.getData().get("bingoObject"));
+                        bingo.setBingoListDone((ArrayList<Boolean>) document.getData().get("bingoCheck"));
+                        Log.d(TAG, bingo.toString());
+                        bingoInitialize(bingo);
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
         return binding.getRoot();
     }
 
-
-    private void bingoInitialize() { // 하루 최초 시작 시
-
-        // 초기화
-        dailyBingoList = new ArrayList<>();
-        dailyBingoListDone = new ArrayList<>();
-
-        // 나중엔 temp를 DB에서 불러오게 될 듯
-        // 랜덤으로 돌려서? 일단 갖고 온 건 랜덤으로 가져온 결과라고 치고...
-        ArrayList<String> temp = new ArrayList<>(Arrays.asList("고양이", "개", "나무", "새", "검은 옷 사람", "파란색 표지판", "파란색 버스", "초록색 버스", "교회"));
-
-        // 리스트에 넣기
-        for (String st : temp) {
-            dailyBingoList.add(st);
-            dailyBingoListDone.add(false);
-        }
-
-        Log.d("Log", dailyBingoList.toString());
-        Log.d("Log", dailyBingoListDone.toString());
+    @Override
+    public void onStart() {
+        super.onStart();
+        bingoInitialize(bingo);
     }
 
-    // 갈아엎어야할듯
+    private void bingoInitialize(Bingo bingo) { // 빙고에서 가져온 데이터 맞춰 빙고판 설정
+
+        // 초기화
+        dailyBingoList = bingo.getBingoList();
+        dailyBingoListDone = bingo.getBingoListDone();
+
+        // 빙고 성공 여부 따라서 빙고판 채색
+        for (int i = 0; i < dailyBingoListDone.size(); i++) {
+            if (dailyBingoListDone.get(i)) {
+                bingoColoring(i);
+                --dailyBingoListDoneCounter;
+            }
+        }
+        binding.textView.setText("남은 빙고 개수 : " + dailyBingoListDoneCounter);
+    }
+
+    // 인덱스 넣으면 빙고 칸 색칠
     private void bingoColoring(int index) {
 
         switch (index) {
             case 0 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn1.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 1 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn2.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 2 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn3.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 3 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn4.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 4 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn5.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn5.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 5 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn6.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn6.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 6 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn7.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn7.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 7 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn8.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn8.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             case 8 :
-                if (dailyBingoListDone.get(index))
-                    binding.bingoBtn9.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
+                binding.bingoBtn9.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.bingo_done));
                 break;
             default:
                 break;
@@ -151,8 +183,12 @@ public class BingoBoardFragment extends Fragment {
     }
 
     private void bingoCheck(int index) {
-
-        String object = dailyBingoList.get(index);
+        
+        //boolean[]형으로 변환해서 전달
+        boolean[] array = new boolean[9];
+        for (int i = 0; i < dailyBingoListDone.size(); i++) {
+            array[i] = dailyBingoListDone.get(i);
+        }
 
         // 프래그먼트 넘기기...?
         if (dailyBingoListDone.get(index)) {
@@ -161,7 +197,7 @@ public class BingoBoardFragment extends Fragment {
             });
             return;
         }
-        activity.passToFragment(BingoCameraFragment.newInstance(object));
+        activity.passToFragment(BingoCameraFragment.newInstance(index, array));
     }
 
 
@@ -232,14 +268,11 @@ public class BingoBoardFragment extends Fragment {
             }
         });
 
-        button9.setOnClickListener(view -> bingoCheck(8));
+        button9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bingoCheck(8);
+            }
+        });
     }
-
-    private Bingo BingoSetupTest() {
-        Bingo bingo = new Bingo();
-        bingo.setId("nr6eHvz5KDa2sDroaPVY");
-
-        return bingo;
-    }
-
 }
