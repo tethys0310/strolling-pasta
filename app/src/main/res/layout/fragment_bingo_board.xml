@@ -20,7 +20,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_5"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="@+id/bingo_btn_2"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_6" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_2"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_1" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_3"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -52,7 +52,7 @@
             app:layout_constraintStart_toEndOf="@+id/bingo_btn_2"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_2" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_1"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -61,7 +61,7 @@
             app:layout_constraintEnd_toStartOf="@+id/bingo_btn_2"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_4"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -71,7 +71,7 @@
             app:layout_constraintEnd_toStartOf="@+id/bingo_btn_5"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_5" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_6"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toEndOf="@+id/bingo_btn_5"
             app:layout_constraintTop_toBottomOf="@+id/bingo_btn_3" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_7"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -90,7 +90,7 @@
             app:layout_constraintEnd_toStartOf="@+id/bingo_btn_8"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_8" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_9"
             android:layout_width="110dp"
             android:layout_height="110dp"
@@ -99,7 +99,7 @@
             app:layout_constraintStart_toEndOf="@+id/bingo_btn_8"
             app:layout_constraintTop_toBottomOf="@+id/bingo_btn_6" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_8"
             android:layout_width="110dp"
             android:layout_height="110dp"

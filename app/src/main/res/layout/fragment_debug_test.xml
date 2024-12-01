@@ -11,19 +11,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
+        <android.widget.Button
             android:id="@+id/ai_btn_hello"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hello?" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/ai_button_camera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="카메라 켜기" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/ai_button_dbconnect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
