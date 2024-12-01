@@ -15,18 +15,24 @@
             android:id="@+id/ai_btn_hello"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:textColor="@color/white"
             android:text="Hello?" />
 
         <android.widget.Button
             android:id="@+id/ai_button_camera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:textColor="@color/white"
             android:text="카메라 켜기" />
 
         <android.widget.Button
             android:id="@+id/ai_button_dbconnect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:textColor="@color/white"
             android:text="예시 빙고 문서와 연결 후 출력" />
     </LinearLayout>
 </FrameLayout>

@@ -12,15 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--뭔지 모르겠어요 수정 필요 -->
 
-        <ImageView
-
-            android:id="@+id/imageView3"
+        <TextView
+            android:id="@+id/lobby_text_dt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="136dp"
+            android:textSize="13pt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
 
         <android.widget.Button
             android:id="@+id/lobby_btn_start"
@@ -31,18 +35,6 @@
             android:background="@color/black"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/lobby_text_dt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="136dp"
-            android:textSize="13pt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
