@@ -27,6 +27,7 @@
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="도감"
         app:srcCompat="@drawable/book_03" />
 
     <ImageButton
@@ -41,6 +42,7 @@
         app:layout_constraintEnd_toStartOf="@+id/main_btn_archive"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toEndOf="@+id/main_btn_book"
+        android:contentDescription="일주일 정리"
         app:srcCompat="@drawable/calendar_01" />
 
     <ImageButton
@@ -52,6 +54,7 @@
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="업적"
         app:srcCompat="@drawable/trophy" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
