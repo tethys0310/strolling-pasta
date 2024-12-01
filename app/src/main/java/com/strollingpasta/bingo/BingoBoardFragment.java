@@ -82,8 +82,8 @@ public class BingoBoardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        firebaseConnector = new FirebaseConnector();
         activity = (BingoActivity) getActivity();
+        firebaseConnector = activity.getFirebaseConnector();
     }
 
     @Override
@@ -183,8 +183,12 @@ public class BingoBoardFragment extends Fragment {
     }
 
     private void bingoCheck(int index) {
-
-        String object = dailyBingoList.get(index);
+        
+        //boolean[]형으로 변환해서 전달
+        boolean[] array = new boolean[9];
+        for (int i = 0; i < dailyBingoListDone.size(); i++) {
+            array[i] = dailyBingoListDone.get(i);
+        }
 
         // 프래그먼트 넘기기...?
         if (dailyBingoListDone.get(index)) {
@@ -193,7 +197,7 @@ public class BingoBoardFragment extends Fragment {
             });
             return;
         }
-        activity.passToFragment(BingoCameraFragment.newInstance(object));
+        activity.passToFragment(BingoCameraFragment.newInstance(index, array));
     }
 
 
@@ -264,8 +268,11 @@ public class BingoBoardFragment extends Fragment {
             }
         });
 
-        button9.setOnClickListener(view -> bingoCheck(8));
+        button9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bingoCheck(8);
+            }
+        });
     }
-
-
 }

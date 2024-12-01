@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -68,7 +69,7 @@ public class TitleActivity extends AppCompatActivity {
     protected void settingButtons() {
 
         // 버튼 선언
-        Button buttonSetup = binding.titleBtnSetup;
+        ImageButton buttonSetup = binding.titleBtnSetup;
         Button buttonStart = binding.titleBtnStart;
 
         // 버튼에 리스너 연결
