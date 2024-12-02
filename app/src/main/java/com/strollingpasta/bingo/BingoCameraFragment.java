@@ -36,6 +36,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
 import com.strollingpasta.bingo.databinding.FragmentBingoCameraBinding;
 
+
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -238,5 +240,9 @@ public class BingoCameraFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    private void test() {
+
     }
 }
