@@ -45,13 +45,14 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.tensorflow.lite.metadata)
+    // implementation(libs.tensorflow.lite.support)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     // LiteRT dependencies for Google Play services
-    implementation("com.google.android.gms:play-services-tflite-java:16.1.0")
+    implementation("com.google.android.gms:play-services-tflite-java:16.3.0")
     // Optional: include LiteRT Support Library
-    implementation("com.google.android.gms:play-services-tflite-support:16.1.0")
+    implementation("com.google.android.gms:play-services-tflite-support:16.3.0")
     // CameraX
     val camerax_version = "1.4.0"
     implementation ("androidx.camera:camera-core:${camerax_version}")
