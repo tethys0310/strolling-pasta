@@ -11,24 +11,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.strollingpasta.bingo.databinding.ActivityMainBinding;
 import com.strollingpasta.bingo.databinding.ActivityTitleBinding;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TitleActivity extends AppCompatActivity {
 
