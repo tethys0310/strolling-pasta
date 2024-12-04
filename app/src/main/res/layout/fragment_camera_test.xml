@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/white"
     tools:context=".CameraTestFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -18,23 +18,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/cameraTest_btn_capture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
             android:text="사진 찍기"
+            android:background="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/cameraTest_btn_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:text="임시용"
+            android:background="@color/black"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

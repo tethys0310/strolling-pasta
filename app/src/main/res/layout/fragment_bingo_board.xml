@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".BingoBoardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,91 +21,100 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_5"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="검은옷 사람"
+            android:background="@drawable/button_line"
             app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_6"
             app:layout_constraintEnd_toEndOf="@+id/bingo_btn_2"
             app:layout_constraintStart_toStartOf="@+id/bingo_btn_2"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_6" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_2"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="개"
+            android:background="@drawable/button_line"
             app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_1" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_3"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="나무"
+            android:background="@drawable/button_line"
             app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_2"
             app:layout_constraintStart_toEndOf="@+id/bingo_btn_2"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_2" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_1"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="고양이"
+            android:background="@drawable/button_line"
             app:layout_constraintEnd_toStartOf="@+id/bingo_btn_2"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_4"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="새"
+            android:background="@drawable/button_line"
             app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_5"
             app:layout_constraintEnd_toStartOf="@+id/bingo_btn_5"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_5" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_6"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="파란색 표지판"
+            android:background="@drawable/button_line"
             app:layout_constraintStart_toEndOf="@+id/bingo_btn_5"
             app:layout_constraintTop_toBottomOf="@+id/bingo_btn_3" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_7"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="파란색 버스"
+            android:background="@drawable/button_line"
             app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_8"
             app:layout_constraintEnd_toStartOf="@+id/bingo_btn_8"
             app:layout_constraintTop_toTopOf="@+id/bingo_btn_8" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_9"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="교회"
+            android:background="@drawable/button_line"
             app:layout_constraintStart_toEndOf="@+id/bingo_btn_8"
             app:layout_constraintTop_toBottomOf="@+id/bingo_btn_6" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/bingo_btn_8"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_weight="1"
             android:text="초록색 버스"
+            android:background="@drawable/button_line"
             app:layout_constraintBottom_toBottomOf="@+id/bingo_btn_9"
             app:layout_constraintEnd_toEndOf="@+id/bingo_btn_5"
             app:layout_constraintStart_toStartOf="@+id/bingo_btn_5"
