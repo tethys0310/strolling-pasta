@@ -33,6 +33,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        mlModelBinding = true
     }
 }
 
@@ -43,6 +44,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
+    implementation(libs.tensorflow.lite.metadata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
