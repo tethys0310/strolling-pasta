@@ -32,30 +32,14 @@
         app:srcCompat="@drawable/book_03" />
 
     <ImageButton
-        android:id="@+id/main_btn_week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginEnd="43dp"
-        android:layout_marginBottom="16dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/main_btn_archive"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toEndOf="@+id/main_btn_book"
-        android:contentDescription="일주일 정리"
-        app:srcCompat="@drawable/calendar_01" />
-
-    <ImageButton
-        android:id="@+id/main_btn_archive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/main_btn_friend"
+        android:layout_width="48dp"
+        android:layout_height="54dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="17dp"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="업적"
-        app:srcCompat="@drawable/trophy" />
+        app:srcCompat="@drawable/smiley_happy" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
