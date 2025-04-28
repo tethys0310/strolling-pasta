@@ -108,4 +108,5 @@ public class LobbyFragment extends Fragment {
 
         textView.setText(y + "년 " + m + "월 " + d + "일" );
     }
+
 }

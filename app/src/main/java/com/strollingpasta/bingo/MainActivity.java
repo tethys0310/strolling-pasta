@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 메뉴 버튼 선언
         ImageButton buttonBook = binding.mainBtnBook;
-        ImageButton buttonWeek = binding.mainBtnWeek;
-        ImageButton buttonArchive = binding.mainBtnArchive;
 
         // 메뉴 버튼에 리스너 연결
         buttonBook.setOnClickListener(new View.OnClickListener() {
@@ -54,20 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "디버그 모드", Toast.LENGTH_SHORT).show();
                 passToFragment(new DebugTestFragment());
                 return false;
-            }
-        });
-
-        buttonWeek.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "미구현", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        buttonArchive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "미구현", Toast.LENGTH_SHORT).show();
             }
         });
 
