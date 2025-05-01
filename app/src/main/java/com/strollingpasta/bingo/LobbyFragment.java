@@ -58,6 +58,7 @@ public class LobbyFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,4 +110,6 @@ public class LobbyFragment extends Fragment {
         textView.setText(y + "년 " + m + "월 " + d + "일" );
     }
 
+
 }
+
