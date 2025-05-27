@@ -1,8 +1,13 @@
 package com.strollingpasta.bingo;
 
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -94,6 +99,7 @@ public class DebugTestFragment extends Fragment {
         Button buttonHello = binding.aiBtnHello;
         Button buttonCamera = binding.aiButtonCamera;
         Button buttonDB = binding.aiButtonDbconnect;
+        Button buttonGPS = binding.aiButtonGps;
 
         // 메뉴 버튼에 리스너 연결
         buttonHello.setOnClickListener(new View.OnClickListener() { // 안녕~
@@ -118,6 +124,41 @@ public class DebugTestFragment extends Fragment {
                 firebaseConnector.ConnectingTest();
                 Toast.makeText(activity, "로그캣 확인하세요", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        buttonGPS.setOnClickListener(view -> {
+            LocationManager locationManager = activity.getLocationManager();
+
+            if (ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+
+            LocationListener locationListener = new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+                    double lat = location.getLatitude();
+                    double lon = location.getLongitude();
+                    Toast.makeText(activity, "위도: " + lat + ", 경도: " + lon, Toast.LENGTH_SHORT).show();
+
+                    // 위치 1회 수신 후 더 이상 수신하지 않도록 제거
+                    locationManager.removeUpdates(this);
+                }
+            };
+
+
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    0,      // 최소 시간
+                    0,      // 최소 거리
+                    locationListener
+            );
         });
 
 
