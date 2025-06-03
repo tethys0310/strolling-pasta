@@ -11,6 +11,7 @@ import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
+import androidx.camera.core.resolutionselector.AspectRatioStrategy;
 import androidx.camera.core.resolutionselector.ResolutionSelector;
 import androidx.camera.core.resolutionselector.ResolutionStrategy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,9 +144,9 @@ public class CameraTestFragment extends Fragment {
 
         // 뷰파인더 바인딩
         PreviewView viewFinder = binding.cameraTestViewFinder;
-        android.util.Size screenSize = new android.util.Size(720, 720); // 사진 비율
+        // 해상도
         ResolutionSelector resolutionSelector = new ResolutionSelector.Builder()
-                .setResolutionStrategy(new ResolutionStrategy(screenSize, ResolutionStrategy.FALLBACK_RULE_NONE))
+                .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
                 .build();
 
         // 뷰파인더 설정

@@ -1,5 +1,9 @@
 package com.strollingpasta.bingo;
 
+import static android.content.ContentValues.TAG;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,13 +14,21 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.strollingpasta.bingo.databinding.FragmentDebugTestBinding;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,6 +112,7 @@ public class DebugTestFragment extends Fragment {
         Button buttonCamera = binding.aiButtonCamera;
         Button buttonDB = binding.aiButtonDbconnect;
         Button buttonGPS = binding.aiButtonGps;
+        Button buttonOverpass = binding.aiButtonOverpass;
 
         // 메뉴 버튼에 리스너 연결
         buttonHello.setOnClickListener(new View.OnClickListener() { // 안녕~
@@ -159,6 +172,88 @@ public class DebugTestFragment extends Fragment {
                     0,      // 최소 거리
                     locationListener
             );
+        });
+
+        buttonOverpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LocationManager locationManager = activity.getLocationManager();
+
+                if (ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+
+                LocationListener locationListener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(@NonNull Location location) {
+                        double lat = location.getLatitude();
+                        double lon = location.getLongitude();
+                        String query = String.format("[out:json];way[\"waterway\"=\"stream\"](around:10000, %f, %f);out;", lat, lon);
+
+                        Log.d(TAG, query);
+
+                        //오버패스 호출?
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl("http://overpass-api.de/api/")
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        RetrofitApiService service = retrofit.create(RetrofitApiService.class);
+
+                        Call<OverpassResponse> call = service.getQuery(query);
+
+                        call.enqueue(new Callback<OverpassResponse>() { // 비동기?
+                            @Override
+                            public void onResponse(Call<OverpassResponse> call, Response<OverpassResponse> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    OverpassResponse answer = response.body(); // 답변 객체
+                                    boolean hasStream = !answer.getElements().isEmpty(); // 쿼리 기준에 맞는 객체 존재 하는가?
+
+                                    if (hasStream) { // Stream 있는 경우
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                                        builder.setMessage(answer.printNames())
+                                                .setTitle("근처에 하천 있음");
+                                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                // User taps OK button.
+                                            }
+                                        });
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    } else {
+                                        // Stream 없는 경우 ... 범위가 넓어서 안 잡히면 GPS 오류
+                                        Toast.makeText(activity, "근처에 하천이 없음", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(activity, "Response 존재 X", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<OverpassResponse> call, Throwable t) {
+                                t.printStackTrace();
+                                Toast.makeText(activity, "네트워크 오류", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        locationManager.removeUpdates(this);
+                    }
+                };
+
+                locationManager.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        0,      // 최소 시간
+                        0,      // 최소 거리
+                        locationListener
+                );
+            }
         });
 
 

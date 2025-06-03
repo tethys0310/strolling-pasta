@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // 뷰 바인딩
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         passToFragment(new LobbyFragment());
 
         settingButtons();
