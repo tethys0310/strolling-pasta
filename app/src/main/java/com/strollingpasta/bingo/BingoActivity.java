@@ -97,7 +97,7 @@ public class BingoActivity extends AppCompatActivity {
                             }
 
                             // DB에 성공 실패 여부 저장
-                            DocumentReference documentReference = firebaseConnector.fillBingoData("nr6eHvz5KDa2sDroaPVY");
+                            DocumentReference documentReference = firebaseConnector.getDocumentReference("nr6eHvz5KDa2sDroaPVY");
                             documentReference.update("bingoCheck", list)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override

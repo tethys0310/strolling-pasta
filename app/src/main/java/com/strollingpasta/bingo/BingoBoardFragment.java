@@ -4,10 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import static java.lang.Thread.sleep;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,14 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -58,9 +47,10 @@ public class BingoBoardFragment extends Fragment {
     private FragmentBingoBoardBinding binding;
     // 리전 GPS
     LocationManager locationManager;
-    boolean isStream = false; // 강
+    /*boolean isStream = false; // 강
     boolean isUniversity = false; // 대학교
-    boolean isCity = false; // 도시
+    boolean isCity = false; // 도시*/
+    ArrayList<Boolean> isRegion = new ArrayList<>();
     // 빙고 객체와 확인 여부
     final Bingo bingo = new Bingo();
     FirebaseConnector firebaseConnector;
@@ -121,7 +111,19 @@ public class BingoBoardFragment extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        findRegion();
+        // 문서 아이디로 문서 유무 확인해서 리전 체크 여부 확인
+        firebaseConnector.checkDocumentReference("nr6eHvz5KDa2sDroaPVY", exists -> {
+            if (exists) {
+                Log.d(TAG, "[checkDocumentReference] 아이디 일치하는 문서 확인");
+                //if (progressDialog.isShowing()) progressDialog.dismiss();
+                //connectFireBase();
+                findRegion();
+            } else {
+                Log.d(TAG, "[checkDocumentReference] 아이디 일치하는 문서 확인 불가능");
+                // 문서 없는 경우 처리
+                findRegion();
+            }
+        });
 
         settingButtons();
 
@@ -319,45 +321,12 @@ public class BingoBoardFragment extends Fragment {
 
     // 오버패스 호출
     public void getApiCall(ArrayList<String> queries) {
-        Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://overpass-api.de/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
-        RetrofitApiService service = retrofit.create(RetrofitApiService.class);
-
-        new Thread(new Runnable() { // 동기식으로 작동, 스레드 분리
+       new Thread(new Runnable() { // 동기식으로 작동, 스레드 분리
             @Override
             public void run() {
-                OverpassResponse answer;
-                for (int i = 0; i < queries.size(); i++) {
-                    int index = i;
-                    Call<OverpassResponse> call = service.getQuery(queries.get(i));
-                    try {
-                        answer = call.execute().body();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    boolean hasElement = !answer.getElements().isEmpty(); // 쿼리 기준에 맞는 객체 존재 하는가?
-                    if (hasElement) { // 객체가 있는 경우
-                        switch (index) {
-                            case 0:
-                                isStream = true;
-                                Log.d(TAG, "APICall: isStream True");
-                                break;
-                            case 1:
-                                isUniversity = true;
-                                Log.d(TAG, "APICall: isUniversity True");
-                                break;
-                            case 2:
-                                isCity = true;
-                                Log.d(TAG, "APICall: isCity True");
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
+                RetrofitApiCall apiCall = new RetrofitApiCall();
+                isRegion = apiCall.sendQuery(queries);
+
                 activity.runOnUiThread(() -> {
                     if (progressDialog.isShowing()) progressDialog.dismiss();
                     connectFireBase();
@@ -369,7 +338,7 @@ public class BingoBoardFragment extends Fragment {
     private ArrayList<String> querySetting(double lat, double lon) {
         String query1 = String.format("[out:json];way[\"waterway\"=\"stream\"](around:500, %f, %f);out;", lat, lon); // 강
         String query2 = String.format("[out:json];node[\"amenity\"=\"university\"](around:300, %f, %f);out;", lat, lon); // 학교
-        String query3 = String.format("[out:json];way[\"waterway\"=\"stream\"](around:500, %f, %f);out;", lat, lon); // 도시
+        String query3 = String.format("[out:json];node[\"place\"=\"borough\"](around:5000, %f, %f);out;", lat, lon); // 도시(구)
         ArrayList<String> queries = new ArrayList<String>();
         queries.add(query1);
         queries.add(query2);
@@ -380,11 +349,11 @@ public class BingoBoardFragment extends Fragment {
 
     private void connectFireBase() {
         // 리전 체크
-        Log.d(TAG, "[ConnectFireBase] isStream: " + String.valueOf(isStream) + ", isCity: " + String.valueOf(isCity) + ", isUniversity: " + String.valueOf(isUniversity));
+        Log.d(TAG, "[ConnectFireBase] isStream: " + isRegion.toString());
 
         // 원래는 날짜 체크 후 진행
         // 비동기식 구성이라 일단 꺼내놨는데 나중에 조금 손 볼 듯...
-        DocumentReference documentReference = firebaseConnector.fillBingoData("nr6eHvz5KDa2sDroaPVY");
+        DocumentReference documentReference = firebaseConnector.getDocumentReference("nr6eHvz5KDa2sDroaPVY");
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

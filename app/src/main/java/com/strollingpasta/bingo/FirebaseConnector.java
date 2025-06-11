@@ -27,9 +27,36 @@ public class FirebaseConnector {
     }
     
     // id 입력하면 id에 맞는 빙고 정보 가지고 올 수 있게...
-    public DocumentReference fillBingoData(String id) {
+    public DocumentReference getDocumentReference(String id) {
         documentReference = db.collection("bingo").document(id);
         return documentReference;
+    }
+
+    // 문서 유무 체크
+    public void checkDocumentReference(String id, FirestoreCallback callback) {
+        documentReference = db.collection("bingo").document(id);
+
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        callback.onResult(true);
+                    } else {
+                        Log.d(TAG, "No such document");
+                        callback.onResult(false);
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                    callback.onResult(false);
+                }
+            }
+        });
+    }
+
+    public interface FirestoreCallback {
+        void onResult(boolean exists);
     }
 
     /*
