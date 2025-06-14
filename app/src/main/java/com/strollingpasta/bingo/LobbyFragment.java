@@ -85,12 +85,40 @@ public class LobbyFragment extends Fragment {
     private void settingButtons(MainActivity activity) {
 
         Button buttonStart = binding.lobbyBtnStart;
+        Button buttonFriendMode = binding.friendGameBtn;
 
         // 메뉴 버튼에 리스너 연결
         buttonStart.setOnClickListener(new View.OnClickListener() { // 찰칵
             @Override
             public void onClick(View view) {
                 activity.passToActivity(new BingoActivity());
+            }
+        });
+
+        buttonFriendMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 선택지 목록
+                String[] options = {"협동 모드", "경쟁 모드"};
+
+                // 기본 선택 인덱스 (예: 첫 번째 항목)
+                final int[] selectedIndex = {0};
+
+                new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                        .setTitle("친구모드 선택")
+                        .setSingleChoiceItems(options, selectedIndex[0], (dialog, which) -> {
+                            selectedIndex[0] = which; // 선택된 항목 저장
+                        })
+                        .setPositiveButton("시작", (dialog, which) -> {
+                            // 선택된 항목 처리
+                            MainActivity activity = (MainActivity) getActivity();
+                            if (activity != null) {
+                                activity.passToActivity(new BingoActivity());
+                            }
+
+                        })
+                        .setNegativeButton("취소", null)
+                        .show();
             }
         });
     }
