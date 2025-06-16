@@ -44,14 +44,16 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
-    implementation(libs.tensorflow.lite.metadata)
+    //implementation(libs.tensorflow.lite.metadata)
+    //implementation(libs.tensorflow.lite.support)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     // LiteRT dependencies for Google Play services
-    implementation("com.google.android.gms:play-services-tflite-java:16.1.0")
+    implementation("com.google.android.gms:play-services-tflite-java:16.4.0")
     // Optional: include LiteRT Support Library
-    implementation("com.google.android.gms:play-services-tflite-support:16.1.0")
+    implementation("com.google.android.gms:play-services-tflite-support:16.4.0")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.4.3")
     // CameraX
     val camerax_version = "1.4.0"
     implementation ("androidx.camera:camera-core:${camerax_version}")
@@ -70,5 +72,8 @@ dependencies {
     implementation ("androidx.credentials:credentials:<latest version>")
     implementation ("androidx.credentials:credentials-play-services-auth:<latest version>")
     implementation ("com.google.android.libraries.identity.googleid:googleid:<latest version>")
+    // Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit 사용
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0") // gson 변환
 
 }

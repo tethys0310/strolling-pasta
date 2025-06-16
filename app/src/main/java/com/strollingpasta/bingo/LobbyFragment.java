@@ -91,6 +91,7 @@ public class LobbyFragment extends Fragment {
                 activity.passToActivity(new BingoActivity());
             }
         });
+
     }
 
 

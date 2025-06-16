@@ -26,13 +26,19 @@ public class PermissionChecker {
 
     private final String[] permissionsAfter13 = { // 티라미수(안드 13) 이상에서 필요한 권한
             Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.INTERNET
     };
 
     private final String[] permissionsBefore13 = { // 티라미수(안드 13) 이하에서 필요한 권한
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.INTERNET
     };
 
     public PermissionChecker(Activity activity, Context context) {

@@ -22,7 +22,7 @@ import com.strollingpasta.bingo.databinding.ActivityTitleBinding;
 public class TitleActivity extends AppCompatActivity {
 
     // 최초 실행시 보이는 타이틀 화면
-    // 여기서 권한 설정, 구글 로그인 등등 다이얼 로그로...
+    // 여기서 권한 설정 등등 다이얼 로그로...
 
     private PermissionChecker permissionChecker;
     private ActivityTitleBinding binding;
@@ -48,12 +48,6 @@ public class TitleActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
-    private void googleSignin() {
-        GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
-                .setFilterByAuthorizedAccounts(true)
-                .setAutoSelectEnabled(true)
-                .build();
-    }
 
     protected void settingButtons() {
 
