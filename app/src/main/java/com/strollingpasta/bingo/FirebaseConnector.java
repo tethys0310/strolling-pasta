@@ -32,6 +32,12 @@ public class FirebaseConnector {
         return documentReference;
     }
 
+    // 오브젝트용
+    public DocumentReference getDocumentReferenceObjects(String id) {
+        documentReference = db.collection("objects").document(id);
+        return documentReference;
+    }
+
     // 문서 유무 체크
     public void checkDocumentReference(String id, FirestoreCallback callback) {
         documentReference = db.collection("bingo").document(id);

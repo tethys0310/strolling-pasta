@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.strollingpasta.bingo.databinding.ActivityBingoBinding;
 
 import java.util.ArrayList;
@@ -111,6 +112,13 @@ public class BingoActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             Log.w(TAG, "Error writing document", e);
                                         }
+                                    });
+                            documentReference.update("bingoObject", FieldValue.delete())
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d(TAG, "필드 삭제 완료");
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e(TAG, "필드 삭제 실패", e);
                                     });
                         }
                         else {

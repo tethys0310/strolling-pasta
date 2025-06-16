@@ -31,6 +31,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.strollingpasta.bingo.databinding.FragmentBingoBoardBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -238,14 +241,53 @@ public class BingoBoardFragment extends Fragment {
 
         // 빙고 성공 여부 따라서 빙고판 채색
         for (int i = 0; i < dailyBingoListDone.size(); i++) {
+            bingoNaming(i);
             if (dailyBingoListDone.get(i)) {
                 bingoColoring(i);
                 --dailyBingoListDoneCounter;
             }
         }
+        Log.d(TAG, "[bingoInitialize] 빙고 초기화 완료");
         binding.textView.setText("남은 빙고 개수 : " + dailyBingoListDoneCounter);
     }
 
+    // 인덱스 넣으면 빙고 칸 이름 변경
+    private void bingoNaming(int index) {
+
+        switch (index) {
+            case 0:
+                binding.bingoBtn1.setText(bingo.getBingoList().get(index));
+                Log.d(TAG, "[bingoNaming] " + bingo.getBingoList().get(index));
+                break;
+            case 1:
+                binding.bingoBtn2.setText(bingo.getBingoList().get(index));
+                break;
+            case 2:
+                binding.bingoBtn3.setText(bingo.getBingoList().get(index));
+                break;
+            case 3:
+                binding.bingoBtn4.setText(bingo.getBingoList().get(index));
+                break;
+            case 4:
+                binding.bingoBtn5.setText(bingo.getBingoList().get(index));
+                break;
+            case 5:
+                binding.bingoBtn6.setText(bingo.getBingoList().get(index));
+                break;
+            case 6:
+                binding.bingoBtn7.setText(bingo.getBingoList().get(index));
+                break;
+            case 7:
+                binding.bingoBtn8.setText(bingo.getBingoList().get(index));
+                break;
+            case 8:
+                binding.bingoBtn9.setText(bingo.getBingoList().get(index));
+                break;
+            default:
+                break;
+        }
+    }
+    
     // 인덱스 넣으면 빙고 칸 색칠
     private void bingoColoring(int index) {
 
@@ -348,34 +390,104 @@ public class BingoBoardFragment extends Fragment {
     }
 
     private void connectFireBase() {
-        // 리전 체크
-        Log.d(TAG, "[ConnectFireBase] isStream: " + isRegion.toString());
 
-        // 원래는 날짜 체크 후 진행
-        // 비동기식 구성이라 일단 꺼내놨는데 나중에 조금 손 볼 듯...
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("빙고 생성중...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Log.d(TAG, "[ConnectFireBase] isRegion: " + isRegion.toString());
+
         DocumentReference documentReference = firebaseConnector.getDocumentReference("nr6eHvz5KDa2sDroaPVY");
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) { // 파이어베이스 연동 성공하면
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+        documentReference.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    if (document.get("bingoObject") == null) {
+                        // bingoObject 없으면 새로 만들고 그 후 처리
+                        makeNewBingo(() -> {
+                            // bingoObject 채운 후 나머지 처리
+                            Log.d(TAG, "[connectFirebase] 콜백 완료");
+                            bingo.setId("nr6eHvz5KDa2sDroaPVY");
+                            Timestamp tmp = (Timestamp) document.getData().get("date");
+                            bingo.setDate(tmp.toDate());
+                            bingo.setBingoList(bingo.getBingoList()); // 이미 만들어졌음
+                            documentReference.update("bingoObject", bingo.getBingoList());
+
+                            bingo.setBingoListDone(new ArrayList<>(Arrays.asList(
+                                    false, false, false, false, false, false, false, false, false)));
+                            documentReference.update("bingoCheck", bingo.getBingoListDone());
+
+                            Log.d(TAG, bingo.toString());
+                            bingoInitialize(bingo);
+                            if (progressDialog.isShowing()) progressDialog.dismiss();
+                        });
+                    } else {
+                        // 기존 값 있을 경우 바로 사용
                         bingo.setId("nr6eHvz5KDa2sDroaPVY");
-                        // 타임스탬프 date로 변환
                         Timestamp tmp = (Timestamp) document.getData().get("date");
                         bingo.setDate(tmp.toDate());
-                        // 빙고 관련 정보들
                         bingo.setBingoList((ArrayList<String>) document.getData().get("bingoObject"));
                         bingo.setBingoListDone((ArrayList<Boolean>) document.getData().get("bingoCheck"));
-                        Log.d(TAG, bingo.toString());
+                        Log.d(TAG, "[connectFirebase] " + bingo.toString());
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                         bingoInitialize(bingo);
-                    } else {
-                        Log.d(TAG, "No such document");
+                        if (progressDialog.isShowing()) progressDialog.dismiss();
                     }
                 } else {
-                    Log.d(TAG, "get failed with ", task.getException());
+                    Log.d(TAG, "No such document");
                 }
+            } else {
+                Log.d(TAG, "get failed with ", task.getException());
             }
         });
+    }
+
+    private void makeNewBingo(Runnable onComplete) {
+
+        Random random = new Random();
+        AtomicInteger count = new AtomicInteger(0);
+        Log.d(TAG, "[makeNewBingo] 호출됨");
+
+        while (count.get() < 30) { // 30번까지만 시도
+            Log.d(TAG, "[makeNewBingo] 반복 " + count + "회");
+            DocumentReference docRef = firebaseConnector.getDocumentReferenceObjects(Integer.toString(random.nextInt(20)));
+            docRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    Log.d(TAG, "[makeNewBingo] 반복 " + count + "회 문서호출 성공 : " + document.getString("name_kr"));
+                    if (!isRegion.get(0)) { //stream
+                        if (Boolean.TRUE.equals(document.getBoolean("river"))) return;
+                    }
+                    if (!isRegion.get(1)) { //city
+                        if (Boolean.TRUE.equals(document.getBoolean("city"))) return;
+                    }
+                    if (!isRegion.get(2)) { //university
+                        if (Boolean.TRUE.equals(document.getBoolean("school"))) return;
+                    }
+                    bingo.getBingoList().add(document.getString("name_kr"));
+                    synchronized (bingo) {
+                        if (bingo.getBingoList().size() > 9) {
+                            do {
+                                bingo.getBingoList().remove(bingo.getBingoList().size()-1);
+                            } while(bingo.getBingoList().size() == 10);
+                            onComplete.run(); // 9개 다 모이면 콜백 실행
+                            Log.d(TAG, "[makeNewBingo] 콜백 날림!");
+                        }
+                    }
+                }
+            });
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            count.incrementAndGet();
+        }
     }
 }
