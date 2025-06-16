@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         // 메뉴 버튼 선언
         ImageButton buttonBook = binding.mainBtnBook;
+        ImageButton buttonFriend = binding.mainBtnFriend;
+
 
         // 메뉴 버튼에 리스너 연결
         buttonBook.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "디버그 모드", Toast.LENGTH_SHORT).show();
                 passToFragment(new DebugTestFragment());
                 return false;
+            }
+        });
+
+        buttonFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passToFragment(new com.strollingpasta.bingo.FriendFragment());
             }
         });
 

@@ -78,6 +78,7 @@ public class LobbyFragment extends Fragment {
 
         settingButtons(activity);
         getDT();
+
         return binding.getRoot();
 
     }

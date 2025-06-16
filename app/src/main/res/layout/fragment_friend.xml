@@ -7,17 +7,6 @@
     android:background="@color/yellow">
 
     <ImageButton
-        android:id="@+id/menu_btn_frd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="16dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/menu" />
-
-    <ImageButton
         android:id="@+id/back_btn_frd"
         android:layout_width="47dp"
         android:layout_height="46dp"
@@ -27,4 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_left_circle" />
+
+    <Button
+        android:id="@+id/code_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="16dp"
+        android:background="#ff7e01"
+        android:text="내 코드"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
